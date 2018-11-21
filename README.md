@@ -9,9 +9,13 @@ This script works with Google Compute Engine, and should work with most other cl
 You must run this script as root, and the script will not run if not run as root or under sudo.
 
 Usage
-=====
+-----
 ./manage_hyperthreading.sh [OPTIONS]
+
 	OPTIONS
+
 	-d | --disable		Disable Hyper-Threaded vCPUs
+
 	-e | --enable		Enable Hyper-Threaded vCPUs
+
 	-h | --help		Display this usage output
