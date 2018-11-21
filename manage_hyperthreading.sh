@@ -34,9 +34,6 @@ function main() {
 	fi
 	
 	eval set -- "$args"
-	q=0
-	disable=0
-	enable=0
 	
 	while true ; do
 	        case $1 in
@@ -48,10 +45,12 @@ function main() {
 	        esac
 	done
 
-	if [ $disable -eq 1 ]; then
+	if [ $disable ]; then
 		disable
-	elif [ $enable -eq 1 ]; then
+	elif [ $enable ]; then
 		enable
+	else
+		usage
 	fi
 }
 	
