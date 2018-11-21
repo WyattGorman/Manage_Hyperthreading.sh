@@ -56,25 +56,15 @@ function main() {
 }
 	
 function enable(){
-	echo -e "Enabling Hyper-Threaded vCPUs...\nNOTE: This will enable all currently offline cores..."
-	sleep 3
-	
 	for vcpu in `lscpu --extended | grep "no" | awk '{print $1}'`; do
-		echo "Enabling core $vcpu"
 		echo 1 > /sys/devices/system/cpu/cpu$vcpu/online
 	done
-	echo "Done."
 }
 	
 function disable(){
-	echo "Disabling Hyper-Threaded vCPUs..."
-	sleep 3
-	
 	for vcpu in `cat /sys/devices/system/cpu/cpu*/topology/thread_siblings_list | cut -s -d, -f2- | sort -u`; do
-		echo "Disabling core $vcpu"
 		echo 0 > /sys/devices/system/cpu/cpu$vcpu/online
 	done
-	echo "Done."
 }
 
 function usage(){
