@@ -61,7 +61,7 @@ function enable(){
 }
 	
 function disable(){
-	for vcpu in `cat /sys/devices/system/cpu/cpu*/topology/thread_siblings_list | cut -s -d, -f2 | sort -u`; do
+	for vcpu in `cat /sys/devices/system/cpu/cpu*/topology/thread_siblings_list | cut -d, -f2 | sort -u`; do
 		echo 0 > /sys/devices/system/cpu/cpu$vcpu/online
 	done
 }
