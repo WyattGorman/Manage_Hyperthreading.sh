@@ -24,8 +24,8 @@ function main() {
 		exit 1
 	fi
 	
-	shortOpts=":deh"
-	longOpts=":disable,enable,help"
+	shortOpts=":desh"
+	longOpts=":disable,enable,show,help"
 	args=$(getopt -o $shortOpts -l $longOpts -- "$@")
 	
 	if [ $? -ne 0 ]; then
@@ -42,6 +42,7 @@ function main() {
 	        case $1 in
 	                -d|--disable	)       disable=1; shift;;
 	                -e|--enable	)	enable=1; shift;;
+			-s|--show	)	show=1; shift;;
 	                -h|--help	)	usage; exit;;
 	                --      	)       shift; break;;
 	                *       	)       usage; exit;;
@@ -52,6 +53,8 @@ function main() {
 		disable
 	elif [ $enable -eq 1 ]; then
 		enable
+	elif [ $show -eq 1 ]; then
+		show
 	fi
 }
 	
@@ -62,9 +65,19 @@ function enable(){
 }
 	
 function disable(){
-	for vcpu in `cat /sys/devices/system/cpu/cpu*/topology/thread_siblings_list | cut -s -d, -f2- | sort -u`; do
+	for vcpu in `cat /sys/devices/system/cpu/cpu*/topology/thread_siblings_list | cut -d, -f2 | cut -d- -f2 | sort -u`; do
 		echo 0 > /sys/devices/system/cpu/cpu$vcpu/online
 	done
+}
+
+function show(){
+	cpu_list=`lscpu | grep -A1 On-line`
+	if [ `echo $cpu_list | grep -c Off-line` -gt 0 ]; then
+		echo "Hyperthreading NOT enabled:"
+		echo "$cpu_list"
+	else
+		echo "Hyperthreading is ENABLED!"
+	fi
 }
 
 function usage(){
@@ -72,6 +85,7 @@ function usage(){
 	echo "	OPTIONS"
 	echo "	-d | --disable		Disable Hyper-Threaded vCPUs"
 	echo "	-e | --enable		Enable Hyper-Threaded vCPUs"
+	echo "	-s | --show		Show Hyper-Threading status"
 	echo "	-h | --help		Display this usage output"
 }
 
