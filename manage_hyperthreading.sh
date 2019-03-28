@@ -34,9 +34,6 @@ function main() {
 	fi
 	
 	eval set -- "$args"
-	q=0
-	disable=0
-	enable=0
 	
 	while true ; do
 	        case $1 in
@@ -49,12 +46,17 @@ function main() {
 	        esac
 	done
 
-	if [ $disable -eq 1 ]; then
+	if [ $disable ]; then
 		disable
-	elif [ $enable -eq 1 ]; then
+	elif [ $enable ]; then
 		enable
+<<<<<<< HEAD
 	elif [ $show -eq 1 ]; then
 		show
+=======
+	else
+		usage
+>>>>>>> 73d52f9679e3d21fcc9c2b0cb2aaf3b1a0cccbfb
 	fi
 }
 	
@@ -65,7 +67,11 @@ function enable(){
 }
 	
 function disable(){
+<<<<<<< HEAD
 	for vcpu in `cat /sys/devices/system/cpu/cpu*/topology/thread_siblings_list | cut -d, -f2 | cut -d- -f2 | sort -u`; do
+=======
+	for vcpu in `cat /sys/devices/system/cpu/cpu*/topology/thread_siblings_list | cut -d, -f2 | sort -u`; do
+>>>>>>> 73d52f9679e3d21fcc9c2b0cb2aaf3b1a0cccbfb
 		echo 0 > /sys/devices/system/cpu/cpu$vcpu/online
 	done
 }
