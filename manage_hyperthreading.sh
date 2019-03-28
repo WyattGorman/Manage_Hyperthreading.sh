@@ -50,13 +50,10 @@ function main() {
 		disable
 	elif [ $enable ]; then
 		enable
-<<<<<<< HEAD
-	elif [ $show -eq 1 ]; then
+	elif [ $show ]; then
 		show
-=======
 	else
 		usage
->>>>>>> 73d52f9679e3d21fcc9c2b0cb2aaf3b1a0cccbfb
 	fi
 }
 	
@@ -67,11 +64,7 @@ function enable(){
 }
 	
 function disable(){
-<<<<<<< HEAD
 	for vcpu in `cat /sys/devices/system/cpu/cpu*/topology/thread_siblings_list | cut -d, -f2 | cut -d- -f2 | sort -u`; do
-=======
-	for vcpu in `cat /sys/devices/system/cpu/cpu*/topology/thread_siblings_list | cut -d, -f2 | sort -u`; do
->>>>>>> 73d52f9679e3d21fcc9c2b0cb2aaf3b1a0cccbfb
 		echo 0 > /sys/devices/system/cpu/cpu$vcpu/online
 	done
 }
@@ -79,10 +72,10 @@ function disable(){
 function show(){
 	cpu_list=`lscpu | grep -A1 On-line`
 	if [ `echo $cpu_list | grep -c Off-line` -gt 0 ]; then
-		echo "Hyperthreading NOT enabled:"
+		echo "Hyper-threading NOT enabled:"
 		echo "$cpu_list"
 	else
-		echo "Hyperthreading is ENABLED!"
+		echo "Hyper-threading is ENABLED!"
 	fi
 }
 
