@@ -8,7 +8,7 @@ This script works with certain* Google Compute Engine instances, and should work
 
 You must run this script as root, and the script will not run if not run as root or under sudo.
 
-\* Only select Google Compute Engine instances support disabling hyper-threads as of Jan 1, 2019. These are: n1-ultramem, and Platform Optimized VMs (bct-skx-*).
+\* NOTE: This script is not supported at all. It is not official Google code. Only select Google Compute Engine instances support disabling hyper-threads as of Jan 1, 2019. These are: n1-ultramem, and C2 instances.
 
 Usage
 -----
