@@ -64,6 +64,11 @@ function enable(){
 }
 	
 function disable(){
+         #works when the delimiters is hyphen ('-')
+	for vcpu in `cat /sys/devices/system/cpu/cpu*/topology/thread_siblings_list | cut -s -d- -f2 | cut -d- -f2 | uniq`; do
+		echo 0 > /sys/devices/system/cpu/cpu$vcpu/online
+	done
+         #works when the delimiters is comma (',')
 	for vcpu in `cat /sys/devices/system/cpu/cpu*/topology/thread_siblings_list | cut -s -d, -f2 | cut -d- -f2 | uniq`; do
 		echo 0 > /sys/devices/system/cpu/cpu$vcpu/online
 	done
